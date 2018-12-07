@@ -23,25 +23,30 @@ namespace MyLinq
             };
 
             var images = new[] {
-                new Image { DocumentId = 1 },
-                new Image { DocumentId = 1 },
-                new Image { DocumentId = 2 },
-                new Image { DocumentId = 2 },
+                new Image { DocumentId = 1.0 },
+                new Image { DocumentId = 1.0 },
+                new Image { DocumentId = 2.0 },
+                new Image { DocumentId = 2.0 },
+                new Image { DocumentId = 2.0 },
             };
 
 
             var query =
                 from document in documents
                 join image in images on document.Id equals image.DocumentId into imgs
+                where document.Id > 0
+                orderby document.Id
                 select new
                 {
+                    Document = document,
                     Images = imgs
                 };
 
 
             foreach (var item in query)
             {
-                Console.WriteLine(item.Images.Count());
+                Console.WriteLine("Document {0}", item.Document.Id);
+                Console.WriteLine("-- Images {0}", item.Images.Count());
             }
         }
     }
